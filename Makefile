@@ -25,7 +25,7 @@ jenkins-test: build deps license linters
 
 protos: # @HELP compile the protobuf files (using protoc-go Docker)
 	docker run -it -v `pwd`:/go/src/github.com/onosproject/rrm-son-lib/go \
-		-v `pwd`/../build-tools/licensing:/build-tools/licensing \
+		-v `pwd`/./build/build-tools/licensing:/build-tools/licensing \
 		-w /go/src/github.com/onosproject/rrm-son-lib/go \
 		--entrypoint build/bin/compile-protos.sh \
 		onosproject/protoc-go:${ONOS_PROTOC_VERSION}
@@ -34,7 +34,7 @@ publish: # @HELP publish version on github and dockerhub
 	./build/build-tools/publish-version ${VERSION}
 
 jenkins-publish: # @HELP Jenkins calls this to publish artifacts
-	../build-tools/release-merge-commit
+	./build/build-tools/release-merge-commit
 
 all: test golang
 
